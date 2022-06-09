@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: flask_demo
+  labels:
+    app: flask
+spec: 
+  replicas: 2
+  selectors: 
+    matchLabels: 
+      app: flask
+  template: 
+    metadata: 
+      labels:
+        app: flask
+    spec:
+      containers:
+      - image: scinet0786/flaskdemo
+        name:  flask_demo
+        ports:
+        - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service 
+metadata: 
+   name: flask_svc  
+spec: 
+  selector:
+    app: flask
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 8082
+    targetPort: 8000
+    nodePort: 31000
+
+
+
+
+
+
+
