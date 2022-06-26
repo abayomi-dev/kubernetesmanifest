@@ -1,12 +1,9 @@
 FROM python:3.8-alpine AS Builder
-WORKDIR  /code
-COPY Demo app requirements.txt  ./
-RUN pip install -r ./Demo app requirement.txt
-COPY DemoFlask.py ./
-FROM alpine:latest 
-RUN mkdir -p /app
-WORKDIR /app 
-COPY --from=Builder /code/DemoFlask.py .
-EXPOSE 8000
-CMD ["python","./app"]
+RUN mkdir /code
+WORKDIR /code 
+COPY req.txt req.txt
+RUN pip install -r req.txt 
+COPY . .
+EXPOSE 5000
+CMD ["python", "DemoFlask.py"]
  
